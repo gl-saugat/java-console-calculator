@@ -1,11 +1,13 @@
     package calculatorApp;
 
+    import java.util.ArrayList;
     import java.util.Scanner;
     import java.util.concurrent.ExecutionException;
 
     public class UserInterface {
         Scanner scan;
         Calculation logic;
+        ArrayList<String> history = new ArrayList<>();
 
         public UserInterface(Scanner scanner) {
             this.scan = scanner;
@@ -17,39 +19,22 @@
             while (run) {
 
                 int input = getChoice();
-                if (input == 5) {
+                if (input == 6) {
                     run = false;
                     System.out.println("Thanks for trying.");
-                } else {
+                    break;
+                }
 
+                if(input == 5){
+                    getHistory().forEach(System.out::println);
+                }else{
                     double input1 = getNumberInput("first", input);
                     double input2 = getNumberInput("second", input);
-
-                    switch (input) {
-                        case 1:
-                            System.out.println(logic.add(input1, input2));
-                            break;
-                        case 2:
-                            System.out.println(logic.difference(input1, input2));
-                            ;
-                            break;
-
-                        case 3:
-                            System.out.println(logic.multiplication(input1, input2));
-                            ;
-                            break;
-                        case 4:
-                            try{
-                                System.out.println(logic.division(input1, input2));
-                            }catch(Exception e){
-                                System.out.println(e.getMessage());
-                            }
-                            ;
-                            break;
-
-                    }
-
+                    System.out.println(getResult(input, input1, input2));
                 }
+
+
+
             }
         }
 
@@ -59,16 +44,17 @@
             System.out.println("2. Subtraction");
             System.out.println("3. Multiply");
             System.out.println("4. Division");
-            System.out.println("5. Exit");
+            System.out.println("5. History");
+            System.out.println("6. Exit");
         }
 
         private int getChoice(){
             int input= 0;
-            while(!(input>0 && input <6)){
+            while(!(input>0 && input <7)){
                 printMenu();
                 try{
                     input = Integer.parseInt(scan.nextLine());
-                    if(input <= 0 || input > 5){
+                    if(input <= 0 || input > 6){
                         System.out.println("Enter a valid number.");
                     }
                 }catch (Exception e){
@@ -100,5 +86,48 @@
             }
 
             return number;
+        }
+
+        private String getResult(int input, double input1, double input2){
+            String result = "";
+            double tmp = 0.0;
+            switch (input) {
+                case 1:
+                    tmp = logic.add(input1, input2);
+                    result = "Sum = " + tmp;
+                    addToHistory("+", input1, input2, tmp);
+                    break;
+                case 2:
+                    tmp = (logic.difference(input1, input2));
+                    result ="Difference = " + tmp;
+                    addToHistory("-", input1, input2, tmp);
+                    break;
+
+                case 3:
+                    tmp = (logic.multiplication(input1, input2));
+                    result ="Multiplication = " + tmp;
+                    addToHistory("*", input1, input2, tmp);
+                    break;
+                case 4:
+                    try{
+                        tmp = (logic.division(input1, input2));
+                        result ="Division = " + tmp;
+                        addToHistory("/", input1, input2, tmp);
+                    }catch(Exception e){
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+
+            }
+
+            return result;
+        }
+
+        public ArrayList<String> getHistory(){
+            return this.history;
+        }
+
+        public void addToHistory(String operator, double input1, double input2, double result){
+            history.add(input1 + operator + input2 + " = " + result);
         }
     }
