@@ -16,14 +16,14 @@
             boolean run = true;
             while (run) {
 
-                int input = getChoice(scan);
+                int input = getChoice();
                 if (input == 5) {
                     run = false;
                     System.out.println("Thanks for trying.");
                 } else {
 
-                    double input1 = getNumberInput(scan, "first", input);
-                    double input2 = getNumberInput(scan, "second", input);
+                    double input1 = getNumberInput("first", input);
+                    double input2 = getNumberInput("second", input);
 
                     switch (input) {
                         case 1:
@@ -58,12 +58,12 @@
             System.out.println("5. Exit");
         }
 
-        private int getChoice(Scanner scanner){
+        private int getChoice(){
             int input= 0;
             while(!(input>0 && input <6)){
                 printMenu();
                 try{
-                    input = Integer.parseInt(scanner.nextLine());
+                    input = Integer.parseInt(scan.nextLine());
                     if(input <= 0 || input > 5){
                         System.out.println("Enter a valid number.");
                     }
@@ -76,13 +76,13 @@
             return input;
         }
 
-        private double getNumberInput(Scanner scanner, String text, int choice){
+        private double getNumberInput(String text, int choice){
             double number = 0.0;
             boolean loop =true;
             while(loop){
                 System.out.println("Enter the "+text+" number:");
                 try{
-                    number = Double.parseDouble(scanner.nextLine());
+                    number = Double.parseDouble(scan.nextLine());
 
                     if(choice == 4 && number == 0 && text.equals("second")){
                         System.out.println("Error: Division by zero.");
