@@ -49,7 +49,7 @@
             }
         }
 
-        public static void printMenu() {
+        private void printMenu() {
             System.out.println("What operations would you like to perform? Press the equivalent number to the operation.");
             System.out.println("1. Addition");
             System.out.println("2. Subtraction");
@@ -58,7 +58,7 @@
             System.out.println("5. Exit");
         }
 
-        public static int getChoice(Scanner scanner){
+        private int getChoice(Scanner scanner){
             int input= 0;
             while(!(input>0 && input <6)){
                 printMenu();
@@ -76,7 +76,7 @@
             return input;
         }
 
-        public static double getNumberInput(Scanner scanner, String text, int choice){
+        private double getNumberInput(Scanner scanner, String text, int choice){
             double number = 0.0;
             boolean loop =true;
             while(loop){
@@ -84,8 +84,8 @@
                 try{
                     number = Double.parseDouble(scanner.nextLine());
 
-                    if(choice == 4 && number == 0){
-                        System.out.println("Empty cannot be divided.");
+                    if(choice == 4 && number == 0 && text.equals("second")){
+                        System.out.println("Error: Division by zero.");
                         continue;
                     }
                     loop = false;
