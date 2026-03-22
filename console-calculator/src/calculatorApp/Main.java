@@ -7,5 +7,6 @@ public class Main {
     static UserInterface ui = new UserInterface(scanner);
     public static void main (String[] args){
         ui.startCalculator();
+
     }
 }

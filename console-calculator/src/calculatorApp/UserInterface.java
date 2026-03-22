@@ -39,7 +39,11 @@
                             ;
                             break;
                         case 4:
-                            System.out.println(logic.division(input1, input2));
+                            try{
+                                System.out.println(logic.division(input1, input2));
+                            }catch(Exception e){
+                                System.out.println(e.getMessage());
+                            }
                             ;
                             break;
 
